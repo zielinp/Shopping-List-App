@@ -21,22 +21,23 @@
 <body>
   <!-- Start your project here-->
   <div class="container">
+    <h1 class="text-center">SHOPPING LIST APP</h1>
     <div class="row">
-      <div class="col col-xl-6 col-12">
+      <div class="col col-xl-4 col-12">
         <div class="component add-panel-component">
           <div class="component-inner">
-            <h2>Add product to your shopping list!</h2>
+            <h2 class="text-center">Add your products</h2>
           </div>
-          <div class="component form-component">
+          <div class="component form-component"> 
 
             <div class="component-inner">
 
-              <div class="form-outline">
-                <input type="text" id="productName" class="form-control"/>
+              <div class="form-outline margin10">
+                <input type="text" id="productName" class="form-control" />
                 <label class="form-label" for="productName">Product</label>
               </div>
 
-              <div class="input-group">
+              <div class="input-group margin10">
 
                 <div class="form-outline">
                   <input type="number" id="productQuantity" class="form-control" />
@@ -51,7 +52,7 @@
 
               </div>
 
-              <select id="productCategory" class="browser-default custom-select form-control">
+              <select id="productCategory" class="browser-default custom-select form-control margin10">
                 <option value="" disabled selected>Choose category</option>
                 <option value="Vegetables">Vegetables</option>
                 <option value="Fruit">Fruit</option>
@@ -60,28 +61,46 @@
                 <option value="Sanitary articles">Sanitary articles</option>
               </select>
 
-              <button disabled type="button" id="addButton" class="btn btn-primary">Add</button>
+              <button disabled type="button" id="addButton" class="btn btn-primary btn-block">Add</button>
 
             </div>
           </div>
         </div>
 
       </div>
-      <div class="col col-xl-6 col-12">
+
+      <div class="col col-xl-1 col-12"></div>
+
+      <div class="col col-xl-7 col-12">
         <div class="component added-items-component">
           <div class="component-inner">
-            <h2>Your added products</h2>
+            <h2 class="text-center">Your added products</h2>
 
             <ul id="mainProductList" class="list-group">
 
               <li class="list-group-item list-title">
-                <ul class="list-group  list-group-horizontal row">
+                <ul class="list-group  list-group-horizontal row text-center">
+                  <li class="list-group-item product-item col-1">
+
+                    <input id="checkAll" class="form-check-input main" type="checkbox" value="" />
+
+                  </li>
                   <li class="list-group-item product-item col-3">Product</li>
-                  <li class="list-group-item quantity-item col-3">Quantity</li>
-                  <li class="list-group-item unit-item col-3">Pcs | Kg</li>
+                  <li class="list-group-item quantity-item col-2">Quantity</li>
+                  <li class="list-group-item unit-item col-2">Pcs | Kg</li>
                   <li class="list-group-item category-item col-3">Category</li>
+                  <li class="list-group-item product-item col-1 ">
+
+                    <button id="deleteAll" type="button" class="btn btn-danger btn-floating btn-sm">
+                      <i class="fas fa-times"></i>                   
+                     </button>
+
+                  </li>
                 </ul>
               </li>
+
+
+
 
             </ul>
 
@@ -99,5 +118,7 @@
 <script type="text/javascript" src="js/index.min.js"></script>
 <!-- Custom scripts -->
 <script type="text/javascript"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </html>

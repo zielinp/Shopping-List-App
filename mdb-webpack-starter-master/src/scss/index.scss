@@ -1,10 +1,17 @@
 @import '~mdb-ui-kit/css/mdb.min.css';
 
-.list-title{
-    color:blue;
-    font-size: 1.25rem;
+h2{
+    padding: 1rem;
 }
 
-.list-product ul:hover{
-    background-color: grey;
+ .margin10{
+    margin-bottom: 10px;
 }
+
+.list-title{
+    color:blue;
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+
