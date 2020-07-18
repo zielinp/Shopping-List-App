@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Shop List App</title>
+  <!-- Favicon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <!-- Main css file -->
+  <link rel="stylesheet" href="css/index.min.css" />
+  <!-- Custom styles -->
+  <style></style>
+</head>
+
+<body>
+  <!-- Start your project here-->
+  <div class="container">
+    <div class="row">
+      <div class="col col-xl-6 col-12">
+        <div class="component add-panel-component">
+          <div class="component-inner">
+            <h2>Add product to your shopping list!</h2>
+          </div>
+          <div class="component form-component">
+
+            <div class="component-inner">
+
+              <div class="form-outline">
+                <input type="text" id="productName" class="form-control" />
+                <label class="form-label" for="productName">Product</label>
+              </div>
+
+              <div class="input-group">
+
+                <div class="form-outline">
+                  <input type="number" id="productQuantity" class="form-control" />
+                  <label class="form-label" for="productQuantity">Quantity</label>
+                </div>
+
+                <input type="radio" class="btn-check" name="options" id="pcs" autocomplete="off" checked />
+                <label class="btn btn-outline-primary" for="pcs">Pcs</label>
+
+                <input type="radio" class="btn-check" name="options" id="kg" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="kg">Kg</label>
+
+              </div>
+
+              <select id="productCategory" class="browser-default custom-select form-control">
+                <option value="" disabled selected>Choose category</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Fruit">Fruit</option>
+                <option value="Dairy products">Dairy products</option>
+                <option value="Bread">Bread</option>
+                <option value="Sanitary articles">Sanitary articles</option>
+              </select>
+
+              <button type="button" id="addButton" class="btn btn-primary">Add</button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col col-xl-6 col-12">
+        <div class="component added-items-component">
+          <div class="component-inner">
+            <h2>Your added products</h2>
+
+            <ul id="mainProductList" class="list-group">
+
+              <li class="list-group-item list-title">
+                <ul class="list-group  list-group-horizontal row">
+                  <li class="list-group-item product-item col-3">Product</li>
+                  <li class="list-group-item quantity-item col-3">Quantity</li>
+                  <li class="list-group-item unit-item col-3">Pcs | Kg</li>
+                  <li class="list-group-item category-item col-3">Category</li>
+                </ul>
+              </li>
+
+            </ul>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- End your project here-->
+
+</body>
+<!-- Main js file -->
+<script type="text/javascript" src="js/index.min.js"></script>
+<!-- Custom scripts -->
+<script type="text/javascript"></script>
+
+</html>
