@@ -8,6 +8,7 @@ export default {
 var main_product_list = [];
 var id = 0;
 
+// Product class
 class Product {
   constructor(name, qunatity, unit, category) {
     this.name = name;
@@ -27,6 +28,35 @@ class Product {
   }
 }
 
+const products_summary = {
+  items: 0,
+  pcs: 0,
+  weight: 0,
+
+  updateSummary() {
+    this.items = main_product_list.length;
+    let all_pcs = main_product_list.filter(x => x.unit == 'pcs');
+    
+    this.pcs = 0;
+    for (var i = 0; i < all_pcs.length; i++) {
+      this.pcs = this.pcs + parseInt(all_pcs[i].qunatity);
+    }
+
+    let all_weight = main_product_list.filter(x => x.unit == 'kg');
+    this.weight = 0;
+    for (var i = 0; i < all_weight.length; i++) {
+      this.weight = this.weight + parseInt(all_weight[i].qunatity);
+    }
+console.log(this.items, this.pcs,this.weight);
+    document.getElementById('numOfProducts').innerText = `Number of products: ${this.items}`;
+    document.getElementById('pcsOfProducts').innerText = `Total pcs: ${this.pcs}`;
+    document.getElementById('weightOfProducts').innerText = `Total weight: ${this.weight} kg`;
+
+  }
+}
+
+
+
 // Function to sort products by category
 function compare(a, b) {
   // Use toUpperCase() to ignore character casing
@@ -42,6 +72,7 @@ function compare(a, b) {
   return comparison;
 }
 
+// Sort list
 function sortList() {
 
   main_product_list = main_product_list.sort(compare);
@@ -52,10 +83,10 @@ function sortList() {
   }
 }
 
-
+// Export to pdf
 function exportListPdf() {
   var doc = new jsPDF();
-  
+
   doc.text('Your products!', 10, 10)
   doc.text("Product", 10, 20);
   doc.text("Quanity", 60, 20);
@@ -89,6 +120,7 @@ function deleteProduct() {
   }
 
   item_to_delete.remove();
+  products_summary.updateSummary();
 
 }
 
@@ -96,6 +128,7 @@ function deleteProduct() {
 function deleteAllProducts() {
   $(".list-product").remove();
   main_product_list = [];
+  products_summary.updateSummary();
 }
 
 // Check all products
@@ -167,6 +200,8 @@ function createListItem(new_product) {
   delete_item.appendChild(delete_item_button);
   delete_item_button.innerHTML = "<i class='fas fa-times'></i>";
   delete_item_button.addEventListener("click", deleteProduct);
+
+  products_summary.updateSummary();
 }
 
 // Take values from input

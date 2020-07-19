@@ -72,11 +72,11 @@
       <div class="col col-xl-1 col-12"></div>
 
       <div class="col col-xl-7 col-12">
-        <div id="shoppingList" class="component added-items-component">
+        <div  class="component added-items-component">
           <div class="component-inner">
             <h2 class="text-center">Your added products</h2>
 
-            <ul class="list-group">
+            <ul  id ="mainProductList" class="list-group">
 
               <li class="list-group-item list-title">
                 <ul class="list-group  list-group-horizontal row text-center">
@@ -98,14 +98,16 @@
                   </li>
                 </ul>
               </li>
-
-
-
-
             </ul>
-
-
           </div>
+        </div>
+
+        <div class="info container small-margin-top">
+          <ul class="list-group  list-group-horizontal row text-center">
+          <li id="numOfProducts" class="list-group-item col-4">Number of products: 0</li>
+          <li id="pcsOfProducts" class="list-group-item col-4">Total pcs: 0</li>
+          <li id="weightOfProducts" class="list-group-item col-4">Total weight: 0</li>
+          </ul>
         </div>
 
         <div class="buttons d-flex justify-content-around small-margin-top">
