@@ -4,8 +4,9 @@ export default {
   mdb,
 };
 
-var main_product_list = [];
 
+var main_product_list = [];
+var id = 0;
 
 class Product {
   constructor(name, qunatity, unit, category) {
@@ -13,6 +14,16 @@ class Product {
     this.qunatity = qunatity;
     this.unit = unit;
     this.category = category;
+    this.id = 0;
+    this.isChecked = false;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+
+  setChecked(isChecked) {
+    this.isChecked = isChecked;
   }
 }
 
@@ -31,40 +42,83 @@ function compare(a, b) {
   return comparison;
 }
 
+function sortList() {
+
+  main_product_list = main_product_list.sort(compare);
+  $(".list-product").remove();
+
+  for (var element = 0; element < main_product_list.length; element++) {
+    createListItem(main_product_list[element]);
+  }
+}
+
+
+function exportListPdf() {
+  var doc = new jsPDF();
+  
+  doc.text('Your products!', 10, 10)
+  doc.text("Product", 10, 20);
+  doc.text("Quanity", 60, 20);
+  doc.text("Pcs/kg", 110, 20);
+  doc.text("Category", 160, 20);
+  let row = 20;
+  let col = 50;
+  for (var element = 0; element < main_product_list.length; element++) {
+    row = row + 10;
+    doc.text(main_product_list[element].name, 10, row);
+    doc.text(main_product_list[element].qunatity, col + 10, row);
+    doc.text(main_product_list[element].unit, 2 * col + 10, row);
+    doc.text(main_product_list[element].category, 3 * col + 10, row);
+  }
+
+  doc.save('shopping-list.pdf');
+
+}
 
 
 // Delete product
-function deleteProduct(){
+function deleteProduct() {
+
   const item_to_delete = this.closest(".list-product");
+  const index = main_product_list.findIndex(x => x.id == item_to_delete.id);
+
+
+  if (index > -1) {
+    main_product_list.splice(index, 1);
+    console.log(main_product_list);
+  }
+
   item_to_delete.remove();
+
 }
 
 // Delete all products
-function deleteAllProducts(){
+function deleteAllProducts() {
   $(".list-product").remove();
+  main_product_list = [];
 }
 
 // Check all products
-function checkAllProducts(){
-   $(".form-check-input").prop('checked', $("#checkAll").prop('checked'));
+function checkAllProducts() {
+  $(".form-check-input").prop('checked', $("#checkAll").prop('checked'));
 }
 
-//Uncheck product
-function uncheckProduct(){
-  $("#checkAll").prop('checked', false);
+//Check product
+function checkProduct() {
+  const item_to_check = this.closest(".list-product");
+  const product = main_product_list.find(x => x.id == item_to_check.id);
+  product.setChecked($(this).prop('checked'));
+  console.log(product);
 }
-
-
-document.getElementById("deleteAll").addEventListener("click",deleteAllProducts);
-document.getElementById("checkAll").addEventListener("click",checkAllProducts);
 
 // Create a new list item
-function createListItem() {
+function createListItem(new_product) {
 
-  let new_product = takeValuesFromInput();
-
+  id++;
   const list_product = document.createElement("li");
   list_product.classList.add("list-group-item", "list-product");
+  list_product.id = id;
+  new_product.setId(id);
   document.getElementById("mainProductList").appendChild(list_product);
 
   const product_group = document.createElement("ul");
@@ -79,9 +133,10 @@ function createListItem() {
   const checked_product_input = document.createElement("input");
   checked_product_input.classList.add("form-check-input");
   checked_product_input.type = "checkbox";
-  checked_product_input.value ="";
+  checked_product_input.value = "";
+  checked_product_input.checked = new_product.isChecked;
   checked_product.appendChild(checked_product_input);
-  checked_product_input.addEventListener("click",uncheckProduct);
+  checked_product_input.addEventListener("click", checkProduct);
 
   const item = document.createElement("li");
   item.classList.add("list-group-item", "product-item", "col-3");
@@ -106,7 +161,7 @@ function createListItem() {
   const delete_item = document.createElement("li");
   delete_item.classList.add("list-group-item", "product-item", "col-1");
   product_group.appendChild(delete_item);
-  
+
   const delete_item_button = document.createElement("button");
   delete_item_button.classList.add("btn", "btn-danger", "btn-sm", "btn-floating");
   delete_item.appendChild(delete_item_button);
@@ -152,4 +207,11 @@ function validateForm() {
 document.getElementById("productName").addEventListener("change", validateForm);
 document.getElementById("productQuantity").addEventListener("change", validateForm);
 document.getElementById("productCategory").addEventListener("change", validateForm);
-document.getElementById("addButton").addEventListener("click", createListItem)
+document.getElementById("addButton").addEventListener("click", function () {
+  createListItem(takeValuesFromInput());
+})
+document.getElementById("deleteAll").addEventListener("click", deleteAllProducts);
+document.getElementById("checkAll").addEventListener("click", checkAllProducts);
+document.getElementById("sortButton").addEventListener("click", sortList)
+document.getElementById("exportButton").addEventListener("click", exportListPdf)
+

@@ -32,12 +32,12 @@
 
             <div class="component-inner">
 
-              <div class="form-outline margin10">
+              <div class="form-outline small-margin-bottom">
                 <input type="text" id="productName" class="form-control" />
                 <label class="form-label" for="productName">Product</label>
               </div>
 
-              <div class="input-group margin10">
+              <div class="input-group small-margin-bottom">
 
                 <div class="form-outline">
                   <input type="number" id="productQuantity" class="form-control" />
@@ -52,7 +52,7 @@
 
               </div>
 
-              <select id="productCategory" class="browser-default custom-select form-control margin10">
+              <select id="productCategory" class="browser-default custom-select form-control small-margin-bottom">
                 <option value="" disabled selected>Choose category</option>
                 <option value="Vegetables">Vegetables</option>
                 <option value="Fruit">Fruit</option>
@@ -72,11 +72,11 @@
       <div class="col col-xl-1 col-12"></div>
 
       <div class="col col-xl-7 col-12">
-        <div class="component added-items-component">
+        <div id="shoppingList" class="component added-items-component">
           <div class="component-inner">
             <h2 class="text-center">Your added products</h2>
 
-            <ul id="mainProductList" class="list-group">
+            <ul class="list-group">
 
               <li class="list-group-item list-title">
                 <ul class="list-group  list-group-horizontal row text-center">
@@ -107,6 +107,12 @@
 
           </div>
         </div>
+
+        <div class="buttons d-flex justify-content-around small-margin-top">
+          <button id="sortButton" class="btn btn-primary col-5">Sort</button>
+          <button id="exportButton" class="btn btn-primary col-5">Export to pdf</button>
+        </div>
+
       </div>
     </div>
 
@@ -118,7 +124,9 @@
 <script type="text/javascript" src="js/index.min.js"></script>
 <!-- Custom scripts -->
 <script type="text/javascript"></script>
+<!-- jQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 
 </html>
