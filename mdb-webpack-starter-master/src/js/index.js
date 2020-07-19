@@ -4,9 +4,7 @@ export default {
   mdb,
 };
 
-
-var main_product_list = [];
-var id = 0;
+//// CLASSES AND OBJECTS DECLARATIONS
 
 // Product class
 class Product {
@@ -19,15 +17,7 @@ class Product {
     this.isChecked = false;
   }
 
-  setId(id) {
-    this.id = id;
-  }
-
-  setChecked(isChecked) {
-    this.isChecked = isChecked;
-  }
 }
-
 const products_summary = {
   items: 0,
   pcs: 0,
@@ -36,7 +26,7 @@ const products_summary = {
   updateSummary() {
     this.items = main_product_list.length;
     let all_pcs = main_product_list.filter(x => x.unit == 'pcs');
-    
+
     this.pcs = 0;
     for (var i = 0; i < all_pcs.length; i++) {
       this.pcs = this.pcs + parseInt(all_pcs[i].qunatity);
@@ -47,7 +37,7 @@ const products_summary = {
     for (var i = 0; i < all_weight.length; i++) {
       this.weight = this.weight + parseInt(all_weight[i].qunatity);
     }
-console.log(this.items, this.pcs,this.weight);
+    console.log(this.items, this.pcs, this.weight);
     document.getElementById('numOfProducts').innerText = `Number of products: ${this.items}`;
     document.getElementById('pcsOfProducts').innerText = `Total pcs: ${this.pcs}`;
     document.getElementById('weightOfProducts').innerText = `Total weight: ${this.weight} kg`;
@@ -56,6 +46,16 @@ console.log(this.items, this.pcs,this.weight);
 }
 
 
+var id = 0;
+// Get data from local storage or initialize empty array
+var main_product_list = localStorage.getItem("mainListLocalStorage") == null ? [] : JSON.parse(localStorage.getItem("mainListLocalStorage"));
+// Show data from localStorage
+for (var element = 0; element < main_product_list.length; element++) {
+  createListItem(main_product_list[element]);
+}
+
+
+//// FUNCTIONS DECLARATIONS
 
 // Function to sort products by category
 function compare(a, b) {
@@ -74,8 +74,8 @@ function compare(a, b) {
 
 // Sort list
 function sortList() {
-
   main_product_list = main_product_list.sort(compare);
+  localStorage.setItem("mainListLocalStorage", JSON.stringify(main_product_list));
   $(".list-product").remove();
 
   for (var element = 0; element < main_product_list.length; element++) {
@@ -101,9 +101,7 @@ function exportListPdf() {
     doc.text(main_product_list[element].unit, 2 * col + 10, row);
     doc.text(main_product_list[element].category, 3 * col + 10, row);
   }
-
   doc.save('shopping-list.pdf');
-
 }
 
 
@@ -113,10 +111,10 @@ function deleteProduct() {
   const item_to_delete = this.closest(".list-product");
   const index = main_product_list.findIndex(x => x.id == item_to_delete.id);
 
-
   if (index > -1) {
     main_product_list.splice(index, 1);
-    console.log(main_product_list);
+    localStorage.setItem("mainListLocalStorage", JSON.stringify(main_product_list));
+    //console.log(main_product_list);
   }
 
   item_to_delete.remove();
@@ -128,20 +126,34 @@ function deleteProduct() {
 function deleteAllProducts() {
   $(".list-product").remove();
   main_product_list = [];
+  localStorage.setItem("mainListLocalStorage", JSON.stringify(main_product_list));
   products_summary.updateSummary();
 }
 
 // Check all products
 function checkAllProducts() {
   $(".form-check-input").prop('checked', $("#checkAll").prop('checked'));
+  for (var element = 0; element < main_product_list.length; element++) {
+    main_product_list[element].isChecked = $("#checkAll").prop('checked');
+  }
+  localStorage.setItem("mainListLocalStorage", JSON.stringify(main_product_list));
 }
 
 //Check product
 function checkProduct() {
   const item_to_check = this.closest(".list-product");
   const product = main_product_list.find(x => x.id == item_to_check.id);
-  product.setChecked($(this).prop('checked'));
-  console.log(product);
+ 
+  product.isChecked = ($(this).prop('checked'));
+  localStorage.setItem("mainListLocalStorage", JSON.stringify(main_product_list));
+  // console.log(product);
+  $("#checkAll").prop('checked', true);
+  for (var element = 0; element < main_product_list.length; element++) {
+    if (main_product_list[element].isChecked == false) {
+      $("#checkAll").prop('checked', false);
+      break;
+    }
+  }
 }
 
 // Create a new list item
@@ -151,7 +163,7 @@ function createListItem(new_product) {
   const list_product = document.createElement("li");
   list_product.classList.add("list-group-item", "list-product");
   list_product.id = id;
-  new_product.setId(id);
+  new_product.id = id;
   document.getElementById("mainProductList").appendChild(list_product);
 
   const product_group = document.createElement("ul");
@@ -221,7 +233,7 @@ function takeValuesFromInput() {
 
   main_product_list.push(new_product);
   console.log(main_product_list);
-  console.log(main_product_list.sort(compare));
+  localStorage.setItem("mainListLocalStorage", JSON.stringify(main_product_list));
   return new_product;
 }
 
@@ -247,6 +259,6 @@ document.getElementById("addButton").addEventListener("click", function () {
 })
 document.getElementById("deleteAll").addEventListener("click", deleteAllProducts);
 document.getElementById("checkAll").addEventListener("click", checkAllProducts);
-document.getElementById("sortButton").addEventListener("click", sortList)
-document.getElementById("exportButton").addEventListener("click", exportListPdf)
+document.getElementById("sortButton").addEventListener("click", sortList);
+document.getElementById("exportButton").addEventListener("click", exportListPdf);
 
