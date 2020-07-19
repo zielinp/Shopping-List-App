@@ -4,7 +4,6 @@
 
 ## Table of contents
 * [General info](#general-info)
-* [Demo](#demo)
 * [Technologies](#technologies)
 * [Features](#features)
 * [Status](#status)
@@ -12,8 +11,6 @@
 
 ## General info
 An application for creating a shopping list with the possibility of exporting to pdf, selecting selected products and sorting by categories.
-
-## Demo
 
 ## Technologies
 * JavaScript
